@@ -1,7 +1,10 @@
 'use client';
 
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Home, FileText, Upload, Users, Settings, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useApp } from '@/contexts/AppContext';
 import { cn } from '@/lib/utils';
 
@@ -15,50 +18,55 @@ const navigation = [
 ];
 
 const stats = [
-  { label: 'Total Posts', value: '1,234' },
-  { label: 'Files Shared', value: '5,678' },
-  { label: 'Active Users', value: '890' },
-  { label: 'Downloads', value: '12.3K' },
+  { label: 'Posts', value: '1.2K' },
+  { label: 'Files', value: '5.6K' },
+  { label: 'Users', value: '890' },
+  { label: 'Downloads', value: '12K' },
 ];
 
 export function Sidebar() {
   const { state } = useApp();
+  const pathname = usePathname();
 
   return (
     <aside
       className={cn(
-        'fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] w-64 transform border-r border-white/10 glassmorphism transition-transform duration-200 ease-in-out',
+        'fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] w-64 transform border-r bg-background transition-transform duration-200 ease-in-out',
         state.sidebarOpen ? 'translate-x-0' : '-translate-x-full',
         'md:translate-x-0'
       )}
     >
-      <div className="flex h-full flex-col">
-        <nav className="flex-1 space-y-2 p-4">
-          {navigation.map((item) => (
-            <Button
-              key={item.name}
-              variant="ghost"
-              className="w-full justify-start glassmorphism hover:bg-white/10"
-            >
-              <item.icon className="mr-3 h-5 w-5" />
-              {item.name}
-            </Button>
-          ))}
+      <div className="flex h-full flex-col gap-4 p-4">
+        <nav className="flex-1 space-y-2">
+          {navigation.map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link key={item.name} href={item.href}>
+                <Button
+                  variant={isActive ? 'default' : 'ghost'}
+                  className="w-full justify-start"
+                >
+                  <item.icon className="mr-3 h-4 w-4" />
+                  {item.name}
+                </Button>
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="border-t border-white/10 p-4">
-          <h3 className="mb-3 text-sm font-semibold text-muted-foreground">
-            Platform Stats
-          </h3>
-          <div className="space-y-3">
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium">Platform Stats</CardTitle>
+          </CardHeader>
+          <CardContent className="grid grid-cols-2 gap-3">
             {stats.map((stat) => (
-              <div key={stat.label} className="glassmorphism rounded-lg p-3">
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-                <div className="text-lg font-semibold">{stat.value}</div>
+              <div key={stat.label} className="text-center">
+                <div className="text-lg font-bold">{stat.value}</div>
+                <div className="text-xs text-muted-foreground">{stat.label}</div>
               </div>
             ))}
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       </div>
     </aside>
   );

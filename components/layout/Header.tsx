@@ -33,7 +33,7 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 glassmorphism">
+    <header className="sticky top-0 z-50 w-full glass-header">
       <div className="container flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-4">
           <Button
@@ -45,11 +45,11 @@ export function Header() {
             <Menu className="h-5 w-5" />
           </Button>
           
-          <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-pink-500">
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-purple-600 to-pink-600">
               <span className="text-sm font-bold text-white">M</span>
             </div>
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-xl font-bold text-transparent">
+            <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-xl font-bold text-transparent">
               mlvs.me
             </span>
           </div>
@@ -62,7 +62,7 @@ export function Header() {
               placeholder="Search posts, files, users..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 glassmorphism border-white/20 bg-white/5 backdrop-blur-md"
+              className="pl-10"
             />
           </div>
         </div>
@@ -72,7 +72,6 @@ export function Header() {
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
-            className="glassmorphism hover:bg-white/10"
           >
             {theme === 'dark' ? (
               <Sun className="h-5 w-5" />
@@ -87,11 +86,11 @@ export function Header() {
                 variant="ghost"
                 size="icon"
                 onClick={handleNotificationClick}
-                className="relative glassmorphism hover:bg-white/10"
+                className="relative"
               >
                 <Bell className="h-5 w-5" />
                 {state.notifications.some(n => !n.read) && (
-                  <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500" />
+                  <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-destructive" />
                 )}
               </Button>
               
@@ -99,16 +98,12 @@ export function Header() {
                 variant="ghost"
                 size="icon"
                 onClick={handleProfileClick}
-                className="glassmorphism hover:bg-white/10"
               >
                 <User className="h-5 w-5" />
               </Button>
             </>
           ) : (
-            <Button
-              onClick={handleAuthClick}
-              className="glassmorphism bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-            >
+            <Button onClick={handleAuthClick}>
               Sign In
             </Button>
           )}

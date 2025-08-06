@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Heart, MessageCircle, Share2, Bookmark, Eye } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Bookmark, Eye, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -32,7 +32,7 @@ export function PostCard({ post }: PostCardProps) {
   };
 
   return (
-    <Card className="glassmorphism border-white/10 bg-white/5 backdrop-blur-md transition-all hover:bg-white/10">
+    <Card className="hover:shadow-md transition-shadow">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -47,9 +47,12 @@ export function PostCard({ post }: PostCardProps) {
               </p>
             </div>
           </div>
-          <Badge variant="secondary" className="glassmorphism">
-            {post.category}
-          </Badge>
+          <div className="flex items-center gap-2">
+            <Badge variant="secondary">{post.category}</Badge>
+            <Button variant="ghost" size="icon">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </CardHeader>
 
@@ -69,32 +72,30 @@ export function PostCard({ post }: PostCardProps) {
 
         <div className="flex flex-wrap gap-2">
           {post.tags.map((tag) => (
-            <Badge key={tag} variant="outline" className="glassmorphism border-white/20">
+            <Badge key={tag} variant="outline">
               #{tag}
             </Badge>
           ))}
         </div>
 
-        <div className="flex items-center justify-between pt-4">
+        <div className="flex items-center justify-between pt-4 border-t">
           <div className="flex items-center gap-4">
             <Button
               variant="ghost"
               size="sm"
               onClick={handleLike}
-              className={`glassmorphism hover:bg-white/10 ${
-                liked ? 'text-red-500' : ''
-              }`}
+              className={liked ? 'text-red-500' : ''}
             >
               <Heart className={`mr-2 h-4 w-4 ${liked ? 'fill-current' : ''}`} />
               {post.likes + (liked ? 1 : 0)}
             </Button>
 
-            <Button variant="ghost" size="sm" className="glassmorphism hover:bg-white/10">
+            <Button variant="ghost" size="sm">
               <MessageCircle className="mr-2 h-4 w-4" />
               {post.comments.length}
             </Button>
 
-            <Button variant="ghost" size="sm" className="glassmorphism hover:bg-white/10">
+            <Button variant="ghost" size="sm">
               <Eye className="mr-2 h-4 w-4" />
               {post.views}
             </Button>
@@ -105,19 +106,12 @@ export function PostCard({ post }: PostCardProps) {
               variant="ghost"
               size="sm"
               onClick={handleBookmark}
-              className={`glassmorphism hover:bg-white/10 ${
-                bookmarked ? 'text-yellow-500' : ''
-              }`}
+              className={bookmarked ? 'text-yellow-500' : ''}
             >
               <Bookmark className={`h-4 w-4 ${bookmarked ? 'fill-current' : ''}`} />
             </Button>
 
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleShare}
-              className="glassmorphism hover:bg-white/10"
-            >
+            <Button variant="ghost" size="sm" onClick={handleShare}>
               <Share2 className="h-4 w-4" />
             </Button>
           </div>

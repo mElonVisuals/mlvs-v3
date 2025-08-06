@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Download, Heart, Shield, Lock, Globe } from 'lucide-react';
+import { Download, Heart, Shield, Lock, Globe, MoreHorizontal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -40,12 +40,11 @@ export function FileCard({ file }: FileCardProps) {
   };
 
   const handleDownload = () => {
-    // Simulate download
     console.log(`Downloading ${file.filename}`);
   };
 
   return (
-    <Card className="glassmorphism border-white/10 bg-white/5 backdrop-blur-md transition-all hover:bg-white/10">
+    <Card className="hover:shadow-md transition-shadow">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -61,15 +60,16 @@ export function FileCard({ file }: FileCardProps) {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Badge variant="secondary" className="glassmorphism">
-              {file.category}
-            </Badge>
+            <Badge variant="secondary">{file.category}</Badge>
             {file.virus_scanned && (
-              <Badge variant="outline" className="glassmorphism border-green-500/50 text-green-400">
+              <Badge variant="outline" className="border-green-500/50 text-green-600">
                 <Shield className="mr-1 h-3 w-3" />
-                Scanned
+                Safe
               </Badge>
             )}
+            <Button variant="ghost" size="icon">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
           </div>
         </div>
       </CardHeader>
@@ -98,21 +98,19 @@ export function FileCard({ file }: FileCardProps) {
 
         <div className="flex flex-wrap gap-2">
           {file.tags.map((tag) => (
-            <Badge key={tag} variant="outline" className="glassmorphism border-white/20">
+            <Badge key={tag} variant="outline">
               #{tag}
             </Badge>
           ))}
         </div>
 
-        <div className="flex items-center justify-between pt-4">
+        <div className="flex items-center justify-between pt-4 border-t">
           <div className="flex items-center gap-4">
             <Button
               variant="ghost"
               size="sm"
               onClick={handleLike}
-              className={`glassmorphism hover:bg-white/10 ${
-                liked ? 'text-red-500' : ''
-              }`}
+              className={liked ? 'text-red-500' : ''}
             >
               <Heart className={`mr-2 h-4 w-4 ${liked ? 'fill-current' : ''}`} />
               {file.likes + (liked ? 1 : 0)}
@@ -123,10 +121,7 @@ export function FileCard({ file }: FileCardProps) {
             </span>
           </div>
 
-          <Button
-            onClick={handleDownload}
-            className="glassmorphism bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-          >
+          <Button onClick={handleDownload}>
             <Download className="mr-2 h-4 w-4" />
             Download
           </Button>
