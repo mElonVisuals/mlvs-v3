@@ -3,6 +3,7 @@ const nextConfig = {
   output: 'standalone',
   experimental: {
     optimizePackageImports: ['lucide-react'],
+    missingSuspenseWithCSRBailout: false,
   },
   images: {
     domains: ['placeholder.svg'],
@@ -13,6 +14,15 @@ const nextConfig = {
   },
   typescript: {
     ignoreBuildErrors: true,
+  },
+  swcMinify: true,
+  trailingSlash: false,
+  webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false,
+    };
+    return config;
   },
 };
 
